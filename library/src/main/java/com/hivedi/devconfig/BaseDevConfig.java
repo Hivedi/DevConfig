@@ -1,6 +1,7 @@
 package com.hivedi.devconfig;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -34,8 +35,13 @@ public abstract class BaseDevConfig {
 		customConfigs.add(value);
 	}
 
+	@Nullable
 	public String getCustomConfig(int idx) {
-		return customConfigs.get(idx);
+		try {
+			return customConfigs.get(idx);
+		} catch (IndexOutOfBoundsException e) {
+			return null;
+		}
 	}
 
 	@Override
