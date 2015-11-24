@@ -66,7 +66,7 @@ public class Dev {
 					}
 
 				} catch (Exception ignore) {
-					ignore.printStackTrace();
+
 				}
 			} else {
 				throw new RuntimeException("Config file not exists: " + CONFIG_FILE);
@@ -74,9 +74,8 @@ public class Dev {
 
 		} catch (InstantiationException ignore) {
 			res = null;
-			ignore.printStackTrace();
 		} catch (IllegalAccessException ignore) {
-			ignore.printStackTrace();
+
 		}
 
 		return res;
