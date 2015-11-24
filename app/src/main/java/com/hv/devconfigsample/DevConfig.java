@@ -1,6 +1,11 @@
 package com.hv.devconfigsample;
 
+import android.os.Environment;
+import android.support.annotation.NonNull;
+
 import com.hivedi.devconfig.BaseDevConfig;
+
+import java.io.File;
 
 /**
  * Created by Hivedi2 on 2015-11-24.
@@ -21,4 +26,17 @@ public class DevConfig extends BaseDevConfig {
 	public boolean getDefaultValue(int configIndex) {
 		return true;
 	}
+
+	@NonNull
+	@Override
+	public File getConfigFile() {
+		return new File(Environment.getExternalStorageDirectory(), "conf");
+	}
+
+	@NonNull
+	@Override
+	public String getConfigKey() {
+		return "sample hash";
+	}
+
 }

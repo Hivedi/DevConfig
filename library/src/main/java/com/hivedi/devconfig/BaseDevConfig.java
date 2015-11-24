@@ -1,5 +1,8 @@
 package com.hivedi.devconfig;
 
+import android.support.annotation.NonNull;
+
+import java.io.File;
 import java.util.ArrayList;
 
 public abstract class BaseDevConfig {
@@ -9,6 +12,11 @@ public abstract class BaseDevConfig {
 
 	public abstract int getBoolConfigCount();
 	public abstract boolean getDefaultValue(int configIndex);
+	public abstract @NonNull File getConfigFile();
+	public abstract @NonNull String getConfigKey();
+	public long getConfigMaxFileRead() {
+		return 20 * 1024;
+	}
 
 	public void addConfig(boolean value) {
 		configs.add(value);
