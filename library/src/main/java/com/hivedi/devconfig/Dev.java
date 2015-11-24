@@ -1,54 +1,48 @@
 package com.hivedi.devconfig;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import java.io.FileInputStream;
 
 public class Dev {
 
-	//private static File CONFIG_FILE;
-	//private static String CONFIG_KEY;
-	//private static long CONFIG_MAX_FILE_SIZE = 20 * 1024;
-	//private static BaseDevConfig mBaseDevConfig;
-
-	@Nullable
+	@NonNull
 	public static <T extends BaseDevConfig> T load(@NonNull BaseDevConfig config) {
-		BaseDevConfig mBaseDevConfig = config;
-		if (mBaseDevConfig.getConfigFile().exists()) {
+		if (config.getConfigFile().exists()) {
 			try {
-
+				// read file
 				String configStr = "";
-				FileInputStream fis = new FileInputStream(mBaseDevConfig.getConfigFile());
+				FileInputStream fis = new FileInputStream(config.getConfigFile());
 				byte[] buff = new byte[8*1024];
 				int read, total = 0;
 				while ( (read = fis.read(buff)) > 0) {
 					configStr += new String(buff, 0, read);
 					total += read;
 
-					if (total > mBaseDevConfig.getConfigMaxFileRead()) {
+					if (total > config.getConfigMaxFileRead()) {
 						// not need read rest file - skip
 						break;
 					}
 				}
 				fis.close();
 
+				// parse file string
 				if (configStr.length() > 0) {
 					String[] cSplit = configStr.split(";");
-					if (cSplit[0].equals(mBaseDevConfig.getConfigKey())) {
+					if (cSplit[0].equals(config.getConfigKey())) {
 						if (cSplit.length > 1) {
 							String configLine = cSplit[1];
-							int boolConfigs = mBaseDevConfig.getBoolConfigCount();
+							int boolConfigs = config.getBoolConfigCount();
 							if (boolConfigs > 0) {
 								for(int i=0; i<boolConfigs; i++) {
-									mBaseDevConfig.addConfig(getConfigValue(configLine, i, mBaseDevConfig.getDefaultValue(i)));
+									config.addConfig(getConfigValue(configLine, i, config.getDefaultValue(i)));
 								}
 							}
 						}
 
 						if (cSplit.length > 2) {
 							for(int i=2; i<cSplit.length; i++) {
-								mBaseDevConfig.addConfig(cSplit[i]);
+								config.addConfig(cSplit[i]);
 							}
 						}
 					}
@@ -60,7 +54,7 @@ public class Dev {
 		}
 
 		//noinspection unchecked
-		return (T) mBaseDevConfig;
+		return (T) config;
 	}
 
 	private static boolean getConfigValue(String configLine, int index, boolean defaultValue) {
