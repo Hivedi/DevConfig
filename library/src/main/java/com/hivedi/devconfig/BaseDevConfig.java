@@ -10,6 +10,7 @@ public abstract class BaseDevConfig {
 
 	private ArrayList<Boolean> configs = new ArrayList<>();
 	private ArrayList<String> customConfigs = new ArrayList<>();
+	private boolean configValid = false;
 
 	public abstract int getBoolConfigCount();
 	public abstract boolean getDefaultValue(int configIndex);
@@ -57,5 +58,13 @@ public abstract class BaseDevConfig {
 		}
 
 		return res.length() > 0 ? res.substring(0, res.length() - 2) : res;
+	}
+
+	public boolean isConfigValid() {
+		return configValid;
+	}
+
+	public void setConfigValid(boolean configValid) {
+		this.configValid = configValid;
 	}
 }

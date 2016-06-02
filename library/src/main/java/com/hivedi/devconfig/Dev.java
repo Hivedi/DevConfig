@@ -30,6 +30,7 @@ public class Dev {
 				if (configStr.length() > 0) {
 					String[] cSplit = configStr.split(";");
 					if (cSplit[0].equals(config.getConfigKey())) {
+						config.setConfigValid(true);
 						if (cSplit.length > 1) {
 							String configLine = cSplit[1];
 							int boolConfigs = config.getBoolConfigCount();
@@ -45,12 +46,18 @@ public class Dev {
 								config.addConfig(cSplit[i]);
 							}
 						}
+					} else {
+						config.setConfigValid(false);
 					}
+				} else {
+					config.setConfigValid(false);
 				}
 
 			} catch (Exception ignore) {
-
+				config.setConfigValid(false);
 			}
+		} else {
+			config.setConfigValid(false);
 		}
 
 		//noinspection unchecked

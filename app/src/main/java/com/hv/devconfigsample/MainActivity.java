@@ -13,14 +13,14 @@ public class MainActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		//Dev.init(new File(Environment.getExternalStorageDirectory(), "conf"), "sample hash");
-		//DevConfig dev = Dev.load(DevConfig.class);
 		DevConfig dev = Dev.load(new DevConfig());
-		if (dev != null) {
+		if (dev.isConfigValid()) {
 			Log.i("tests", "CONFIG=" + dev.toString());
 			Log.i("tests", "Config1=" + dev.getBoolConfig(DevConfig.CONFIG_1));
 			Log.i("tests", "Config2=" + dev.getBoolConfig(DevConfig.CONFIG_2));
 			Log.i("tests", "Config3=" + dev.getBoolConfig(DevConfig.CONFIG_3));
+		} else {
+			Log.w("tests", "Config is invalid");
 		}
 	}
 }
